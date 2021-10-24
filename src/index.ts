@@ -33,7 +33,7 @@ routersApi(app);
 
 import { unexpectedError } from './api/v1/middlewares/unexpectedError.Middleware';
 app.use(unexpectedError);
-
+app.use(express.static(path.join(__dirname, 'assets')));
 // listen on port: default port = 5000
 const PORT: number = parseInt(process.env.PORT as string, 10) || 5000;
 app.listen(PORT, (): void => {

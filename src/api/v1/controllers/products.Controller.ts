@@ -1,5 +1,6 @@
 // dependencies
-import {  Request, Response, NextFunction } from 'express';
+import {  Request, Response } from 'express';
+import path from 'path';
 
 // Interfaces
 
@@ -10,11 +11,7 @@ import { asyncMiddleware } from '../middlewares/async.Middleware';
 import { productService } from '../services/product.Service';
 
 // validations
-
-class ProductsController {
-	//-----------------------------------GET----------------------------------
-	home = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
-		// Website you wish to allow to connect
+// Website you wish to allow to connect
 		// res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
 
 		// // Request methods you wish to allow
@@ -27,9 +24,40 @@ class ProductsController {
 		// // to the API (e.g. in case you use sessions)
 		// res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+class ProductsController {
+	//-----------------------------------GET----------------------------------
+	getAllProduct = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
 		
-		const data = await productService.getAll();
-		res.send(data);
+		const {data, message, status} = await productService.getAll();
+		
+		res.status(status).send({data , message});
+	});
+	getProductsByIDCategoryWithSetLimit = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		const query = req.query;
+		const IDCategory = Number(query.idcategory);
+		const Limit = Number(query.limit);
+		const Path = process.env.PATH_API;
+		const {data, message, status} = await productService.getProductsByIDCategoryWithSetLimit(IDCategory, Limit);
+		
+		res.status(status).send({data , message, Path});
+	});
+	getAllProductsByIDCategory = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const query = req.query;
+		const IDCategory = Number(query.idcategory);
+		const Path = process.env.PATH_API;
+		const {data, message, status} = await productService.getAllProductsByIDCategory(IDCategory);
+		
+		res.status(status).send({data , message, Path});
+	});
+	getProductByIDProduct = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const query = req.query;
+		const IDProduct = String(query.IDProduct);
+		const Path = process.env.PATH_API;
+		const {data, message, status} = await productService.getProductByIDProduct(IDProduct);
+		
+		res.status(status).send({data , message, Path});
 	});
 }
 
