@@ -7,10 +7,15 @@ const productsRouter = Router();
 // Controller
 import { productsController } from '../../controllers/products.Controller';
 
+
 //-------------------------------------------- api/products/... -------------------------------
 
 //--------------------------------------------GET------------------------------------------
-productsRouter.get('/', productsController.home);
+productsRouter.get('/all', productsController.getAllProduct);
+productsRouter.get('/idcategory-limit', productsController.getProductsByIDCategoryWithSetLimit);
+productsRouter.get('/idcategory', productsController.getAllProductsByIDCategory);
+productsRouter.get('/idproduct', productsController.getProductByIDProduct);
+
 //--------------------------------------------POST-----------------------------------------
 
 //--------------------------------------------PUT------------------------------------------
