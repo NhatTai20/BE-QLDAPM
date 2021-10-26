@@ -15,6 +15,11 @@ productsRouter.get('/all', productsController.getAllProduct);
 productsRouter.get('/idcategory-limit', productsController.getProductsByIDCategoryWithSetLimit);
 productsRouter.get('/idcategory', productsController.getAllProductsByIDCategory);
 productsRouter.get('/idproduct', productsController.getProductByIDProduct);
+productsRouter.get('/search', productsController.searchProduct);
+productsRouter.get('/count-search', productsController.countSearchProduct);
+productsRouter.get('/trend', productsController.productTrends);
+productsRouter.get('/rank', productsController.productRanking);
+
 
 //--------------------------------------------POST-----------------------------------------
 

@@ -6,6 +6,7 @@ import path from 'path';
 
 // Middlewares
 import { asyncMiddleware } from '../middlewares/async.Middleware';
+import { search } from '../routes/routersApi/category.Router';
 
 // services
 import { productService } from '../services/product.Service';
@@ -29,12 +30,12 @@ class ProductsController {
 	getAllProduct = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
 		
 		const {data, message, status} = await productService.getAll();
-		
-		res.status(status).send({data , message});
+		const Path = process.env.PATH_API;
+		res.status(status).send({data , message, Path});
 	});
 	getProductsByIDCategoryWithSetLimit = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
 		const query = req.query;
-		const IDCategory = Number(query.idcategory);
+		const IDCategory = Number(query.IDCategory);
 		const Limit = Number(query.limit);
 		const Path = process.env.PATH_API;
 		const {data, message, status} = await productService.getProductsByIDCategoryWithSetLimit(IDCategory, Limit);
@@ -44,7 +45,7 @@ class ProductsController {
 	getAllProductsByIDCategory = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
 		
 		const query = req.query;
-		const IDCategory = Number(query.idcategory);
+		const IDCategory = Number(query.IDCategory);
 		const Path = process.env.PATH_API;
 		const {data, message, status} = await productService.getAllProductsByIDCategory(IDCategory);
 		
@@ -59,6 +60,44 @@ class ProductsController {
 		
 		res.status(status).send({data , message, Path});
 	});
+	searchProduct = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const query = req.query;
+		const Search= String(query.search) || ''; 
+		const Sort = String(query.sort)|| '';
+		const Order =  String(query.order) || '';
+		const Limit =  Number(query.limit) || 48; 
+		const Offset = Number(query.offset) || 1;
+		const Path = process.env.PATH_API;
+		const {data, message, status} = await productService.searchProduct(Search, Sort, Order, Limit, Offset);
+		
+		res.status(status).send({data , message, Path});
+	});
+	countSearchProduct = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const query = req.query;
+		const Search= String(query.search) || ''; 
+		const Sort = String(query.sort)|| '';
+		
+		const Path = process.env.PATH_API;
+		const {data, message, status} = await productService.countSearchProduct(Search, Sort);
+		
+		res.status(status).send({data , message, Path});
+	});
+	productTrends = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const {data, message, status} = await productService.productTrends();
+		const Path = process.env.PATH_API;
+		res.status(status).send({data , message, Path});
+	});
+	productRanking = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		
+		const query = req.query;
+		const IDCategory = Number(query.IDCategory);
+		const Limit =  Number(query.limit) || 5; 
+		const {data, message, status} = await productService.productRanking(IDCategory, Limit);
+		const Path = process.env.PATH_API;
+		res.status(status).send({data , message, Path});
+	});
 }
-
 export const productsController = new ProductsController();
