@@ -1,4 +1,4 @@
-export const TBL_PRODUCTS: string = 'products';
-export const TBL_ITEMS: string = 'items';
-export const TBL_BOOKS: string = 'books';
+export const TBL_PRODUCTS: string = 'product';
+export const TBL_ITEMS: string = 'item';
+export const TBL_BOOKS: string = 'book';
 export const TBL_CATEGORYPRODUCT: string = 'categoryproduct';
