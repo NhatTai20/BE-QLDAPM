@@ -115,9 +115,9 @@ class ProductService {
 			throw new Error(error.messages);
 		}
 	};
-	productTrends = async () => {
+	productTrends = async (limit: number) => {
 		try {
-			const products = await productsModel.productTrends();
+			const products = await productsModel.productTrends(limit);
 			if (products === null) {
 				return {
 					data: null,
