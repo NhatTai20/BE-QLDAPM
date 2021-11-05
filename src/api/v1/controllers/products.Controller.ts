@@ -85,8 +85,9 @@ class ProductsController {
 		res.status(status).send({data , message, Path});
 	});
 	productTrends = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
-		
-		const {data, message, status} = await productService.productTrends();
+		const query = req.query;
+		const Limit =  Number(query.limit) || 10; 
+		const {data, message, status} = await productService.productTrends(Limit);
 		const Path = process.env.PATH_API;
 		res.status(status).send({data , message, Path});
 	});

@@ -125,11 +125,11 @@ class ProductsModel {
 
 		return rows.length;
 	}
-	async productTrends() {
+	async productTrends(limit: number) {
 		const rows = await database.load(
 			`select * from ${TBL_PRODUCTS}
 			order by View desc 
-			limit 10`
+			limit ${limit}`
 		);
 
 		if (rows.length === 0) return null;
