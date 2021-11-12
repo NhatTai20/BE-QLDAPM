@@ -1,0 +1,10 @@
+GET http://localhost:5000/api/user/login?email=nguyenhaanhkiem@gmail.com&pass=12345
+
+###
+GET http://localhost:5000/api/user/register?email=satthuid@gmail.com
+
+###
+GET http://localhost:5000/api/user/send-otp?email=nguyenhaanhkiem@gmail.com
+
+###
+GET http://localhost:5000/api/user/valid-email?email=nguyenhaanhkiem@gmail.com
