@@ -19,7 +19,7 @@ productsRouter.get('/search', productsController.searchProduct);
 productsRouter.get('/count-search', productsController.countSearchProduct);
 productsRouter.get('/trend', productsController.productTrends);
 productsRouter.get('/rank', productsController.productRanking);
-
+productsRouter.get('/favorite-list', productsController.favoriteList);
 
 //--------------------------------------------POST-----------------------------------------
 

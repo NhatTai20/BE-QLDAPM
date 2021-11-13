@@ -1,4 +1,4 @@
-import { TBL_BOOKS, TBL_ITEMS, TBL_PRODUCTS } from '../../../../constants/tables';
+import { TBL_BOOKS, TBL_ITEMS, TBL_PRODUCTS, TBL_FAVORITE } from '../../../../constants/tables';
 import { database } from '../../../../start/connectDB';
 
 class ProductsModel {
@@ -44,8 +44,44 @@ class ProductsModel {
 			return data;
 		}
 	}
-	async searchProduct(search: string, sort: string, order: string, limit: number, offset: number) {
+	async searchProduct(
+		search: string,
+		sort: string,
+		order: string,
+		limit: number,
+		offset: number,
+		ordervalue: string,
+		typeproduct?: string,
+		price?: string,
+		votes?: number
+	) {
 		let sql: string = ``;
+		let whereCondition = ``;
+
+		if (search) {
+			whereCondition += `where match(NameProduct) against('${search}')`;
+		}
+
+		if (price) {
+			const index = price.indexOf('and');
+			if (index > 0) {
+				if (whereCondition) whereCondition += ` and Price between ${price}`;
+				else whereCondition += `where Price between ${price}`;
+			} else {
+				if (whereCondition) whereCondition += ` and Price ${price}`;
+				else whereCondition += `where Price ${price}`;
+			}
+		}
+
+		if (typeproduct) {
+			if (whereCondition) whereCondition += ` and TypeProduct = '${typeproduct}'`;
+			else whereCondition += `where TypeProduct = '${typeproduct}'`;
+		}
+
+		if (votes) {
+			if (whereCondition) whereCondition += ` and Votes = ${votes}`;
+			else whereCondition += `where Votes = ${votes}'`;
+		}
 		switch (sort) {
 			case 'Bán Chạy Tuần':
 				break;
@@ -67,19 +103,19 @@ class ProductsModel {
 				break;
 			default:
 				sql = `select *
-                    from (
-                    select * 
-                    from ${TBL_PRODUCTS}
-                    where 
-                    match(NameProduct)
-					against('${search}')
-                    ${order}
-                    limit ${limit}
-                    offset ${offset}
-                   ) as p
-                   `;
+					from (
+					select * 
+					from ${TBL_PRODUCTS}
+					${whereCondition}
+					order by ${order} ${ordervalue}
+					limit ${limit}
+					offset ${offset}
+				   ) as p
+				   `;
+
 				break;
 		}
+		console.log('mysql', sql);
 
 		const rows = await database.load(sql);
 		if (rows.length === 0) return null;
@@ -87,8 +123,40 @@ class ProductsModel {
 		return rows;
 	}
 	// phan trang
-	async countSearchProduct(search: string, sort: string) {
+	async countSearchProduct(
+		search: string,
+		sort: string,
+		typeproduct: string,
+		price: string,
+		votes: number
+	) {
 		let sql: string = ``;
+		let whereCondition = ``;
+
+		if (search) {
+			whereCondition += `where match(NameProduct) against('${search}')`;
+		}
+
+		if (price) {
+			const index = price.indexOf('and');
+			if (index > 0) {
+				if (whereCondition) whereCondition += ` and Price between ${price}`;
+				else whereCondition += `where Price between ${price}`;
+			} else {
+				if (whereCondition) whereCondition += ` and Price ${price}`;
+				else whereCondition += `where Price ${price}`;
+			}
+		}
+
+		if (typeproduct) {
+			if (whereCondition) whereCondition += ` and TypeProduct = '${typeproduct}'`;
+			else whereCondition += `where TypeProduct = '${typeproduct}'`;
+		}
+
+		if (votes) {
+			if (whereCondition) whereCondition += ` and Votes = ${votes}`;
+			else whereCondition += `where Votes = ${votes}'`;
+		}
 		switch (sort) {
 			case 'Bán Chạy Tuần':
 				break;
@@ -113,9 +181,7 @@ class ProductsModel {
                     from (
                     select * 
                     from ${TBL_PRODUCTS}
-                    where 
-                    match(NameProduct)
-					against('${search}')
+                    ${whereCondition}
                    ) as p
                    `;
 				break;
@@ -142,6 +208,18 @@ class ProductsModel {
 			where IDCategory = ${IDCategory}
 			order by Votes desc 
 			limit ${limit}`
+		);
+
+		if (rows.length === 0) return null;
+
+		return rows;
+	}
+
+	// favorite
+	async favoriteProduct(IDUser: number) {
+		const rows = await database.load(
+			`select * from ${TBL_PRODUCTS} as a join ${TBL_FAVORITE} as b ON a.IDProduct = b.IDProduct
+			where IDUser = ${IDUser}`
 		);
 
 		if (rows.length === 0) return null;
