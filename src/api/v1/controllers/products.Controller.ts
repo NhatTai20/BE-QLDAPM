@@ -2,17 +2,23 @@
 import {  Request, Response } from 'express';
 import path from 'path';
 
+
 // Interfaces
 
 // Middlewares
 import { asyncMiddleware } from '../middlewares/async.Middleware';
 import { search } from '../routes/routersApi/category.Router';
 
+
 // services
 import { productService } from '../services/product.Service';
 
 // validations
+
 // Website you wish to allow to connect
+
+
+
 		// res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
 
 		// // Request methods you wish to allow
@@ -24,6 +30,7 @@ import { productService } from '../services/product.Service';
 		// // Set to true if you need the website to include cookies in the requests sent
 		// // to the API (e.g. in case you use sessions)
 		// res.setHeader('Access-Control-Allow-Credentials', 'true');
+
 
 class ProductsController {
 	//-----------------------------------GET----------------------------------
@@ -101,4 +108,5 @@ class ProductsController {
 		res.status(status).send({data , message, Path});
 	});
 }
+
 export const productsController = new ProductsController();

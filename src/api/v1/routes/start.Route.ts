@@ -8,4 +8,5 @@ export function routersApi (app: Express): void {
 	app.use('/api/products', productsRouter);
 	app.use('/api/category', categoryRouter);
 	app.use('/api/user', userRouter)
+
 }
