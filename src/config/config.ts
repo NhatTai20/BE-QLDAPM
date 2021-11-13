@@ -19,7 +19,6 @@ const MYSQL = {
 
 const config = {
     mysql: MYSQL,
-    
 };
 
 export default config;

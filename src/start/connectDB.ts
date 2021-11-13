@@ -39,6 +39,6 @@ class Database {
 	};
 	return pool_query(query)
   } 
-	
+
 }
 export const database = new Database();

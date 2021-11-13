@@ -2,11 +2,13 @@
 import { Request, Response } from 'express';
 import path from 'path';
 
+
 // Interfaces
 
 // Middlewares
 import { asyncMiddleware } from '../middlewares/async.Middleware';
 import { search } from '../routes/routersApi/category.Router';
+
 
 // services
 import { productService } from '../services/product.Service';
@@ -117,6 +119,7 @@ class ProductsController {
 	});
 	productRanking = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
 		const query = req.query;
+
 		const IDCategory = Number(query.IDCategory);
 		const Limit = Number(query.limit) || 5;
 		const { data, message, status } = await productService.productRanking(IDCategory, Limit);
