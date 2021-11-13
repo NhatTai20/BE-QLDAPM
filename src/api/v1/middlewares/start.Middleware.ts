@@ -23,8 +23,8 @@ export function startMiddleware (app: Express): void {
 	app.enable('trust proxy');
 	app.use(
 		rateLimit({
-			windowMs: 60 * 1000, // 15 minutes
-			max: 60, // max is 60 request
+			windowMs: 60 * 1000, // 1 minutes
+			max: 500, // max is 500 request
 		}),
 	);
 

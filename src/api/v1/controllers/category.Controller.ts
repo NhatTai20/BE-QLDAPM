@@ -1,4 +1,5 @@
 // dependencies
+
 import { Request, Response } from 'express';
 import { parse } from 'path/posix';
 
@@ -44,3 +45,4 @@ class CategoryController {
 	);
 }
 export const categoryController = new CategoryController();
+

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { productsModel } from '../models/product.Model/product.model';
 class ProductService {
 	getAll = async () => {
@@ -153,12 +152,6 @@ class ProductService {
 		} catch (error: any) {
 			throw new Error(error.messages);
 		}
-=======
-import {productsModel} from '../models/product.Model/product.model';
-class ProductService {
-	getAll = async () => {
-		return productsModel.all();
->>>>>>> main
 	};
 }
 
