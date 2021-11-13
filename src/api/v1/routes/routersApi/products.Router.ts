@@ -8,6 +8,8 @@ const productsRouter = Router();
 import { productsController } from '../../controllers/products.Controller';
 
 
+
+
 //-------------------------------------------- api/products/... -------------------------------
 
 //--------------------------------------------GET------------------------------------------
@@ -19,6 +21,7 @@ productsRouter.get('/search', productsController.searchProduct);
 productsRouter.get('/count-search', productsController.countSearchProduct);
 productsRouter.get('/trend', productsController.productTrends);
 productsRouter.get('/rank', productsController.productRanking);
+
 
 
 //--------------------------------------------POST-----------------------------------------

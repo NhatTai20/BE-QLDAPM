@@ -150,3 +150,4 @@ class ProductsModel {
 	}
 }
 export const productsModel = new ProductsModel();
+
