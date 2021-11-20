@@ -111,6 +111,10 @@ class UserController {
 			}
 		});
 	});
+
+	getInfo = asyncMiddleware(async (req: Request, res: Response): Promise<void> => {
+		res.status(200).json({ data: res.locals.data, message: 'Info' });
+	});
 }
 
 export const userController = new UserController();

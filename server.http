@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/user/login?email=nguyenhaanhkiem@gmail.com&pass=12345
+GET http://localhost:5000/api/user/login?email=nguyenhaanhkiem@gmail.com&pass=123456
 
 ###
 GET http://localhost:5000/api/user/register?email=satthuid@gmail.com
@@ -8,3 +8,6 @@ GET http://localhost:5000/api/user/send-otp?email=nguyenhaanhkiem@gmail.com
 
 ###
 GET http://localhost:5000/api/user/valid-email?email=nguyenhaanhkiem@gmail.com
+
+###
+GET http://localhost:5000/api/user/get-info?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjUsIkZpcnN0TmFtZSI6bnVsbCwiTGFzdE5hbWUiOm51bGwsIkVtYWlsIjoibmd1eWVuaGFhbmhraWVtQGdtYWlsLmNvbSIsIkRhdGVPZkJpcnRoIjpudWxsLCJHZW5kZXIiOm51bGwsIlR5cGVPZlVzZXIiOjAsIkFjdGl2ZSI6MSwiaWF0IjoxNjM3NDIzMjk5LCJleHAiOjE2Mzc0MjM1OTl9.l2DVJmgwHwd28DvuSQ3r99H96oF0G6VCB0i1b8253Ok
