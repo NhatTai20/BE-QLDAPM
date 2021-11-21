@@ -4,11 +4,23 @@ import util from 'util';
 
 const pool = mysql.createPool({
 	host: config.mysql.host,
-	port: 3306,
+	port: config.mysql.port,
 	user: config.mysql.user,
 	password: config.mysql.pass,
 	database: config.mysql.database,
 	connectionLimit: 50,
+});
+
+pool.getConnection(function(err :any,connection :any){
+	if (err) {
+	  console.log(err)
+	  throw err;
+	}   
+	
+	connection.on('error', function(err:any) {      
+		  throw err;
+		  return;     
+	});
 });
 
 const pool_query = util.promisify(pool.query).bind(pool);
@@ -39,6 +51,6 @@ class Database {
 	};
 	return pool_query(query)
   } 
-
+	
 }
 export const database = new Database();
