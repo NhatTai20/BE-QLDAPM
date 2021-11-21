@@ -5,20 +5,21 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export function authenTokenMiddleware(handler: Function): any {
-	return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-		try {
-			const token = String(req.query.token);
+export function authenTokenMiddleware(req: Request, res: Response, next: NextFunction): void {
+	try {
+		const token = String(req.query.jwt);
 
-			if (!token) res.sendStatus(401);
+		console.log(token);
 
-			jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, data) => {
-				if (err) res.sendStatus(403);
+		if (!token) res.sendStatus(401);
 
-				next();
-			});
-		} catch (error) {
-			res.status(401).json(error);
-		}
-	};
+		jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, data) => {
+			if (err) res.status(200).json({ data: false, message: 'JWT wrong' });
+
+			res.locals.data = data;
+			next();
+		});
+	} catch (error) {
+		res.status(401).json(error);
+	}
 }
